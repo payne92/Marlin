@@ -1,5 +1,7 @@
 
-# Top level makefile for building Marlin
+# Top level makefile for building Marlin from the command-line
+
+DEFS=-DHARDWARE_VARIANT=Sanguino -DMCU=atmega1284p -DF_CPU=16000000
 
 LIBS=-Ibuild-libs/LiquidCrystal_I2C/LiquidCrystal_I2C \
 		-Ibuild-libs/LiquidTWI2 \
@@ -12,7 +14,7 @@ all: firmware.hex
 firmware.hex: build-libs build-arduino
 	-ln -s Marlin src
 	rm -f Marlin/Marlin.pde
-	ino build --verbose --arduino-dist=build-arduino -m atmega1284m --cppflags="-ffunction-sections -fdata-sections -g -Os -w $(LIBS)"
+	ino build --verbose --arduino-dist=build-arduino -m atmega1284 --cppflags="-ffunction-sections -fdata-sections -g -Os -w $(LIBS)"
 	cp .build/atmega*/firmware.* .
 
 #
